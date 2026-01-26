@@ -3,10 +3,10 @@
 
 ---
 
-### 📋 Script de configuration
 
 
 ## CONFIGURATION DE BASE ET SÉCURITÉ
+### 📋 Script de configuration
 
 ### Identification et DNS
 ```
