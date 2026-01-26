@@ -5,11 +5,9 @@
 
 ### 📋 Script de configuration
 
-```
-```
+
 ## CONFIGURATION DE BASE ET SÉCURITÉ
-```
-```
+
 ### Identification et DNS
 ```
 hostname S3-L3
