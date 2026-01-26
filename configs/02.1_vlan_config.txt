@@ -4,7 +4,6 @@
 ! #######################################################
 
 ! --- Création de la base de données VLAN ---
-! À configurer sur tous les switchs pour la cohérence
 vlan 10
  name ADMIN
 vlan 20
@@ -13,6 +12,8 @@ vlan 30
  name SALES
 vlan 40
  name GUEST
+vlan 99
+ name NATIVE_VLAN           ! OBLIGATOIRE pour tes Trunks
 vlan 999
  name UNUSED_PORTS          ! VLAN "Blackhole" pour la sécurité
 exit
@@ -20,7 +21,6 @@ exit
 ! --- Configuration du Routage Inter-VLAN (S3-L3 uniquement) ---
 ip routing                  ! Active la fonction de routage sur le Switch L3
 
-! Passerelles par défaut (SVI)
 interface Vlan 10
  description GW_ADMIN
  ip address 192.168.10.1 255.255.255.0
@@ -44,19 +44,35 @@ interface Vlan 40
 ! --- Port Routé (Liaison vers le Routeur principal) ---
 interface GigabitEthernet 0/1
  description LINK_TO_ROUTER
- no switchport              ! Transforme le port L2 en interface L3
+ no switchport               ! Transforme le port L2 en interface L3
  ip address 10.0.0.2 255.255.255.252
  no shutdown
+
+! --- 3. CONFIGURATION DES TRUNKS PHYSIQUES (PROVISOIRE) ---
+interface range FastEthernet 0/1 - 2
+ description TRUNK_TO_S1
+ switchport trunk encapsulation dot1q
+ switchport mode trunk
+ switchport trunk native vlan 99
+ switchport trunk allowed vlan 10,20,30,40,99
+
+interface range FastEthernet 0/3 - 4
+ description TRUNK_TO_S2
+ switchport trunk encapsulation dot1q
+ switchport mode trunk
+ switchport trunk native vlan 99
+ switchport trunk allowed vlan 10,20,30,40,99
 
 ! --- Configuration des ports d'accès (Exemple sur S1) ---
 interface range FastEthernet 0/1 - 5
  description ACCESS_PORT_VLAN_10
- switchport mode access     ! Force le port en mode terminal
- switchport access vlan 10  ! Assigne le port au VLAN 10
- spanning-tree portfast     ! Accélère la mise en service du port
+ switchport mode access
+ switchport access vlan 10
+ spanning-tree portfast
+ spanning-tree bpduguard enable
 
 ! --- Sécurisation des ports inutilisés ---
 interface range FastEthernet 0/11 - 20
  description UNUSED_DISABLED
- switchport access vlan 999 ! Isole dans le VLAN Blackhole
- shutdown                   ! Extinction administrative
+ switchport access vlan 999
+ shutdown
