@@ -8,6 +8,7 @@ Déploiement d'une architecture réseau hiérarchique. L'objectif est de valider
 ## 2. Implémentation technique
 
 ### Phase 1 : Configuration de base et Sécurité
+Cette étape définit le socle de sécurité indispensable avant le déploiement des services réseau.
 * Cette étape définit le socle de sécurité indispensable avant le déploiement des services réseau.
 * Accès Distant : Migration vers SSHv2 (chiffrement RSA 1024 bits) et désactivation du protocole Telnet. 🔑
 * Identité & Accès : Création d'un compte admin local et protection du mode privilégié par hachage MD5. 🛡️
