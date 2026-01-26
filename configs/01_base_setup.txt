@@ -1,6 +1,13 @@
+# Configuration de Base et Sécurité
+**Cible :** `S1`, `S2`, `S3-L3`
+
+---
+
+### 📋 Script de configuration
+
+```ios
 ! #######################################################
 ! CONFIGURATION DE BASE ET SÉCURITÉ
-! Appliquée sur : S1, S2, S3-L3
 ! #######################################################
 
 ! --- Identification et DNS ---
