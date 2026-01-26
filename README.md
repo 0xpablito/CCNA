@@ -11,19 +11,23 @@ Déploiement d'une architecture réseau hiérarchique. L'objectif est de valider
 Établissement d'une base de sécurité sur l'ensemble des switchs.
 * Activation de **SSHv2**, chiffrement des mots de passe et gestion des accès console.
 * 🔗 [Consulter le script de base](./configs/01_base_setup.txt)
-## Phase 2 : Segmentation VLAN & Routage Inter-VLAN
-Mise en place d'une isolation logique des services et centralisation du routage sur le cœur de réseau.
+🏢 Côté Siège (Switch L3)
+* Segmentation : VLANs 10 (Admin), 20 (Prod), 30 (Sales), 40 (Guest).
 
-Segmentation multi-zones : Création des VLANs 10, 20, 30, 40 pour le siège et 70, 80 pour la partie opérationnelle.
+* Routage SVI : Interfaces virtuelles sur le Switch L3 pour un routage inter-VLAN à vitesse filaire.
 
-Architecture de Routage Hybride :
+* Optimisation : Activation du PortFast sur les ports d'accès pour une connectivité instantanée des postes de travail.
 
-* Switch L3 (SVI) : Routage interne du siège pour garantir une commutation à vitesse filaire (Wire-speed).
+🚚 Côté Opérations (Router-on-a-Stick)
+* Segmentation : VLANs 70 (Partners) et 80 (Logistics).
 
-* Router-on-a-Stick : Utilisation de sous-interfaces sur le routeur central pour segmenter la zone opérationnelle.
+* Routage Sub-interfaces : Utilisation du routeur central pour segmenter les flux opérationnels via le protocole 802.1Q.
 
-* Sécurité des Trunks : Modification du VLAN Natif (VLAN 99) sur les interconnexions pour prévenir les attaques de type VLAN Hopping.
+* Lien Trunk : Configuration d'un lien d'agrégation entre le switch d'accès et le routeur pour transporter plusieurs VLANs sur un seul câble.
 
-* Sécurisation des accès : Isolation de tous les ports inutilisés dans un VLAN 999 (BlackHole) avec extinction administrative.
+🛡️ Sécurité Réseau Globale
+* VLAN Natif (VLAN 99) : Migration du trafic non tagué vers un VLAN dédié sur tous les Trunks (Switchs et Routeur) pour contrer le VLAN Hopping.
 
-* 🔗 Consulter le script de configuration VLAN
+* VLAN BlackHole (VLAN 999) : Redirection de tous les ports inutilisés vers un VLAN isolé avec extinction administrative (shutdown).
+
+🔗 Consulter le script de configuration complet (VLAN/ROAS)
