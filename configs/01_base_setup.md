@@ -1,9 +1,6 @@
 # Configuration de Base et Sécurité
 **Cible :** `S1`, `S2`, `S3-L3`
 
----
-
-
 
 ## CONFIGURATION DE BASE ET SÉCURITÉ
 ### 📋 Script de configuration
