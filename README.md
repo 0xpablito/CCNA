@@ -2,7 +2,8 @@
 
 ## 1. Vue d'ensemble
 Déploiement d'une architecture réseau hiérarchique. L'objectif est de valider la mise en place d'un cœur de réseau redondant et d'une segmentation stricte du trafic.
-<img width="1756" height="648" alt="image" src="https://github.com/user-attachments/assets/5bfc457e-1868-47b4-833b-c3e91c476274" />
+<img width="1899" height="725" alt="image" src="https://github.com/user-attachments/assets/a27599ca-dc3e-443d-b2dc-5034c8994e65" />
+
 
 
 ## 2. Implémentation technique
