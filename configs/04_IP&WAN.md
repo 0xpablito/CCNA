@@ -48,7 +48,7 @@ ip dhcp pool VLAN70_PARTNERS
  dns-server 8.8.8.8
 
 ip dhcp pool VLAN80_LOGISTICS
- network 172.16.80.1 255.255.255.0
+ network 172.16.80.0 255.255.255.0
  default-router 172.16.80.1
  dns-server 8.8.8.8
 ```
