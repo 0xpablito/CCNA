@@ -2,7 +2,7 @@
 
 Ce document regroupe les tests de bon fonctionnement des liens agrégés et des sécurités de couche 2 appliquées
 
-## Vérification technique - Liens et Sécurité (S1, S2, S3-L3)
+## Vérification technique - Liens et Sécurité (ACC-01, ACC-02, CORE)
 L'objectif ici est de confirmer que les liens doublés sont bien actifs et que le réseau réagit correctement en cas de panne ou de branchement non autorisé.
 
 ## 1. État des liens EtherChannel
@@ -36,6 +36,6 @@ Validation réelle de la redondance en cas de défaillance d’un lien physique.
   ## 4. Validation BPDU Guard
 Objectif : Prouver que l'infrastructure est capable de se protéger automatiquement contre l'ajout d'équipements non autorisés ou les boucles accidentelles.
 
-* **Action :** Connecter un switch secondaire sur l'un des ports configurés en PortFast (ex: Fa0/3 sur S1).
+* **Action :** Connecter un switch secondaire sur l'un des ports configurés en PortFast (ex: Fa0/3 sur ACC-01).
 * **Points de contrôle :** Le port doit être immédiatement désactivé par le processus Spanning-Tree pour protéger la topologie.
 ><img width="1059" height="417" alt="image" src="https://github.com/user-attachments/assets/88a16a97-4a40-46e5-8a1c-b6ade90e88dd" />
