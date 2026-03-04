@@ -10,6 +10,7 @@
 interface range f0/21 - 22
  shutdown ! On coupe les ports pour éviter les erreurs STP pendant la config
  channel-group 1 mode active ! Active = protocole LACP (Standard)
+ switchport trunk encapsulation dot1q
  switchport mode trunk ! Force le lien en Trunk pour passer tous les VLANs
  no shutdown ! On relance proprement l'agrégation
 
@@ -17,6 +18,7 @@ interface range f0/21 - 22
 interface range f0/23 - 24
  shutdown
  channel-group 3 mode active
+ switchport trunk encapsulation dot1q
  switchport mode trunk
  no shutdown
 ```
@@ -26,6 +28,7 @@ interface range f0/23 - 24
 interface range f0/23 - 24
  shutdown
  channel-group 2 mode active
+ switchport trunk encapsulation dot1q
  switchport mode trunk
  no shutdown
 
@@ -33,6 +36,7 @@ interface range f0/23 - 24
 interface range f0/1 - 2
  shutdown
  channel-group 3 mode active
+ switchport trunk encapsulation dot1q
  switchport mode trunk
  no shutdown
 ```
@@ -42,6 +46,7 @@ interface range f0/1 - 2
 interface range f0/1 - 2
  shutdown
  channel-group 1 mode active   ! Agrégation côté Cœur pour S1
+ switchport trunk encapsulation dot1q
  switchport mode trunk
  no shutdown
 
@@ -49,6 +54,7 @@ interface range f0/1 - 2
 interface range f0/3 - 4
  shutdown
  channel-group 2 mode active   ! Agrégation côté Cœur pour S2
+ switchport trunk encapsulation dot1q
  switchport mode trunk
  no shutdown
 ```
