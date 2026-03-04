@@ -86,7 +86,7 @@ Optimisation des liaisons physiques et sécurisation de la topologie pour garant
 
 ### 1. Configuration du Trunk sur EtherChannel
 * **Symptôme** : Malgré la création du Port-Channel entre le Switch L3 et les switchs d'accès, le trafic des VLANs ne passait pas. Les interfaces restaient en mode "access" par défaut.
-* **Diagnostic** : La commande `switchport mode trunk` avait été appliquée sur l'intervalle d'interfaces physiques (`interface range f0/1-2`) mais pas sur l'interface logique du groupe (`interface port-channel 1`). 
+* **Diagnostic** : La commande `switchport mode trunk` avait été appliquée sur l'intervalle d'interfaces physiques (`interface range f0/21-22`) mais pas sur l'interface logique du groupe (`interface port-channel 1`). 
 * **Résolution** : Pour corriger l'instabilité et l'incohérence de configuration, j'ai dû réinitialiser les interfaces physiques, supprimer le Port-Channel, puis recréer l'agrégation en appliquant les commandes `switchport mode trunk` directement sur l'interface Port-Channel.
 
 ### 2. Dysfonctionnements du NAT
