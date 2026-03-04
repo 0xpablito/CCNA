@@ -1,5 +1,18 @@
 # Infrastructure L2/L3 - Segmentation & Redondance
 
+## 🎯 Objectifs et Démarche
+Après avoir suivi le parcours théorique du CCNA et assimilé les fondamentaux du réseau, j'ai choisi de dépasser le cadre des exercices guidés pour concevoir une infrastructure de zéro. L'objectif était de tester mes automatismes et de consolider mes acquis avant l'examen **CCNA 200-301**.
+
+Ma méthode d'apprentissage repose sur une approche concrète : **identifier et résoudre mes propres erreurs de configuration.** Ce lab a été réalisé avec un minimum d'aide extérieure pour me forcer à diagnostiquer chaque dysfonctionnement manuellement, car c'est de cette manière que j'assimile le mieux les concepts.
+
+### 🛠️ Compétences techniques validées :
+* **L2 (Commutation)** : VLANs, Trunks (802.1Q), Etherchannel (LACP), Spanning-Tree (PortFast, BPDU Guard) et Port-Security.
+* **L3 (Routage)** : Routage Inter-VLAN (SVI & Router-on-a-Stick) et routage statique.
+* **Services & Sécurité** : DHCP Server (avec gestion des exclusions), NAT/PAT (Overload), ACLs (Standard & Étendues) et sécurisation des accès (SSHv2).
+
+> 💡 Cette approche m'a permis de transformer des erreurs de logique en opportunités d'apprentissage. Pour illustrer ma démarche de diagnostic, je consacre une section **Troubleshooting** en bas de page aux principaux défis techniques résolus durant ce lab.
+
+
 ## 1. Vue d'ensemble
 Déploiement d'une architecture réseau hiérarchique. L'objectif est de valider la mise en place d'un cœur de réseau redondant et d'une segmentation stricte du trafic.
 <img width="1622" height="699" alt="image" src="https://github.com/user-attachments/assets/2b52325c-de37-4860-94b2-6c4d41e8af40" />
@@ -68,3 +81,26 @@ Optimisation des liaisons physiques et sécurisation de la topologie pour garant
 
 🔗 [Consulter le script de base](/configs/04_IP&WAN.md) 
 🧪 [Consulter les tests de validation](/tests/04_IP&WAN.md)
+
+## 🛠️ Troubleshooting : Défis Techniques & Résolutions
+
+### 1. Configuration du Trunk sur EtherChannel
+* **Symptôme** : Malgré la création du Port-Channel entre le Switch L3 et les switchs d'accès, le trafic des VLANs ne passait pas. Les interfaces restaient en mode "access" par défaut.
+* **Diagnostic** : La commande `switchport mode trunk` avait été appliquée sur l'intervalle d'interfaces physiques (`interface range f0/1-2`) mais pas sur l'interface logique du groupe (`interface port-channel 1`). 
+* **Résolution** : Pour corriger l'instabilité et l'incohérence de configuration, j'ai dû réinitialiser les interfaces physiques, supprimer le Port-Channel, puis recréer l'agrégation en appliquant les commandes `switchport mode trunk` directement sur l'interface Port-Channel.
+
+### 2. Dysfonctionnements du NAT
+* **Symptôme** : Le trafic provenant du Siège (192.168.x.x) sortait correctement sur Internet, mais les hôtes du Dépôt (172.16.x.x) ne généraient aucune entrée dans la table NAT (`show ip nat translations`).
+* **Diagnostic** : Deux erreurs distinctes bloquaient le processus :
+  * 1. **Erreur d'interface** : La commande `ip nat inside` était appliquée uniquement sur l'interface physique `g0/0/1`. Or, avec le Router-on-a-Stick, le trafic passe par les sous-interfaces.
+    2. **Oubli de mise à jour de l'ACL** : Après avoir passé le Dépôt en 172.16.x.x, l'ACL 1 autorisait toujours uniquement l'ancien réseau (192.168.x.x). Le trafic arrivait bien au routeur, mais le NAT l'ignorait car il n'était pas dans la liste des réseaux autorisés à sortir.
+* **Résolution** :
+  * Ajout du `ip nat inside` sur les sous-interfaces `g0/0/1.70` et `g0/0/1.80`.
+  * Ajout de la ligne `access-list 1 permit 172.16.0.0 0.0.255.255`.
+ 
+ ### 3. Conflit d'IP et gestion des exclusions DHCP
+* **Symptôme** : Impossible d'attribuer l'adresse statique prévue (`192.168.20.2`) à l'imprimante réseau.
+* **Diagnostic** : Lors de mes tests, j'ai activé le DHCP sur les PC pour vérifier que le serveur distribuait bien les adresses. Comme je n'avais pas encore configuré les `ip dhcp excluded-address`, le serveur a pioché la première adresse disponible (.2) pour l'attribuer à un PC, créant un conflit avec l'IP statique réservée à l'imprimante.
+* **Résolution** :
+  * Configuration des exclusions sur le switch L3 : `ip dhcp excluded-address 192.168.20.1 192.168.20.5` pour protéger les passerelles et les ressources statiques.
+  * Réinitialisation du processus DHCP sur l'ensemble des PC (`ipconfig /renew`) : cette commande force les PC à contacter à nouveau le serveur pour obtenir une nouvelle IP qui sera maintenant située dans le pool prévu (au-delà de la .5).
