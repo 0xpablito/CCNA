@@ -104,3 +104,17 @@ Optimisation des liaisons physiques et sécurisation de la topologie pour garant
 * **Résolution** :
   * Configuration des exclusions sur le switch L3 : `ip dhcp excluded-address 192.168.20.1 192.168.20.5` pour protéger les passerelles et les ressources statiques.
   * Réinitialisation du processus DHCP sur l'ensemble des PC (`ipconfig /renew`) : cette commande force les PC à contacter à nouveau le serveur pour obtenir une nouvelle IP qui sera maintenant située dans le pool prévu (au-delà de la .5).
+
+##  Configuration & Fichiers
+
+###  Accès au Lab
+Vous pouvez télécharger le fichier complet pour l'ouvrir dans Cisco Packet Tracer :
+* [📥 Télécharger le lab (.pkt)](lab/LAB-1.pkt)
+
+### 📄 Fichiers de Configuration (Show Run)
+Pour une lecture rapide, les configurations sont disponibles ici :
+* [Routeur de Bordure (R-EDGE)](configs/R-EDGE.txt)
+* [Switch de Cœur (CORE)](configs/CORE.txt)
+* [Switch Accès Admin (ACC-01)](configs/ACC-01.txt)
+* [Switch Accès Prod (ACC-02)](configs/ACC-02.txt)
+* [Switch Accès Dépôt (DEPOT)](configs/ACC-02.txt)
