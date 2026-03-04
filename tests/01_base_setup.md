@@ -47,7 +47,7 @@ Validation de l'accès depuis un poste d'administration et affichage de la banni
 ## 4. Blocage des protocoles non sécurisés 
 Preuve que le protocole Telnet est désactivé au profit du SSH.
 
-* **Commande :** `telnet 192.168.1.10`
+* **Commande :** `telnet 192.168.10.1`
 * **Résultat attendu :** "Connection closed by foreign host" ou "Connection refused".
 
 > <img width="642" height="60" alt="image" src="https://github.com/user-attachments/assets/0508eb33-8598-4cd5-bbf6-08fe1af96b8c" />
