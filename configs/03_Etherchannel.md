@@ -1,12 +1,12 @@
 # Configuration EtherChannel LACP (IEEE 802.3ad)
-**Cible :** `S1`, `S2`, `S3-L3`
+**Cible :** `ACC-01`, `ACC-02`, `CORE`
 
 
 ### 📋 Script de configuration
 
-### Configuration sur S1 (Vers S3 et S2)
+### Configuration sur ACC-01 (Vers S3 et ACC-02)
 ```
- --- Groupe 1 : Liaison vers S3-L3 ---
+ --- Groupe 1 : Liaison vers CORE ---
 interface range f0/21 - 22
  shutdown ! On coupe les ports pour éviter les erreurs STP pendant la config
  channel-group 1 mode active ! Active = protocole LACP (Standard)
@@ -14,7 +14,7 @@ interface range f0/21 - 22
  switchport mode trunk ! Force le lien en Trunk pour passer tous les VLANs
  no shutdown ! On relance proprement l'agrégation
 
- --- Groupe 3 : Liaison vers S2 ---
+ --- Groupe 3 : Liaison vers ACC-02 ---
 interface range f0/23 - 24
  shutdown
  channel-group 3 mode active
@@ -22,9 +22,9 @@ interface range f0/23 - 24
  switchport mode trunk
  no shutdown
 ```
-### Configuration sur S2 (Vers S3 et S1)
+### Configuration sur ACC-02 (Vers S3 et ACC-01)
 ```
- --- Groupe 2 : Liaison vers S3-L3 ---
+ --- Groupe 2 : Liaison vers CORE ---
 interface range f0/23 - 24
  shutdown
  channel-group 2 mode active
@@ -32,7 +32,7 @@ interface range f0/23 - 24
  switchport mode trunk
  no shutdown
 
- --- Groupe 3 : Liaison vers S1 ---
+ --- Groupe 3 : Liaison vers ACC-01 ---
 interface range f0/1 - 2
  shutdown
  channel-group 3 mode active
@@ -40,26 +40,26 @@ interface range f0/1 - 2
  switchport mode trunk
  no shutdown
 ```
-### Configuration sur S3-L3 
+### Configuration sur CORE 
 ```
- --- Groupe 1 : Liaison vers S1 ---
+ --- Groupe 1 : Liaison vers ACC-01 ---
 interface range f0/1 - 2
  shutdown
- channel-group 1 mode active   ! Agrégation côté Cœur pour S1
+ channel-group 1 mode active   ! Agrégation côté Cœur pour ACC-01
  switchport trunk encapsulation dot1q
  switchport mode trunk
  no shutdown
 
- --- Groupe 2 : Liaison vers S2 ---
+ --- Groupe 2 : Liaison vers ACC-02 ---
 interface range f0/3 - 4
  shutdown
- channel-group 2 mode active   ! Agrégation côté Cœur pour S2
+ channel-group 2 mode active   ! Agrégation côté Cœur pour ACC-02
  switchport trunk encapsulation dot1q
  switchport mode trunk
  no shutdown
 ```
 ### Sécurisation des ports d'accès (STP Hardening)
-Exemple pour S1
+Exemple pour ACC-01
 ```
  --- Configuration des ports utilisateurs  ---
 interface range f0/1 - 10     ! On cible les ports qui ne sont pas des Trunks
