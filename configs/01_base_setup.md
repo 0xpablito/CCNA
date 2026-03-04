@@ -1,12 +1,12 @@
 # Configuration de Base et Sécurité
-**Cible :** `S1`, `S2`, `S3-L3`,`S4`,`R1`
+**Cible :** `ACC-01`, `ACC-02`, `CORE`,`DEPOT`,`R-EDGE`
 
 
 ### 📋 Script de configuration
 
 ### Identification et DNS
 ```
-hostname S3-L3
+hostname CORE
 no ip domain-lookup        ! Évite les blocages en cas d'erreur de frappe
 ```
 ### Sécurisation des accès 
