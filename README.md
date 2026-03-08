@@ -111,6 +111,10 @@ Optimisation des liaisons physiques et sécurisation de la topologie pour garant
 ###  Accès au Lab
 Vous pouvez télécharger le fichier complet pour l'ouvrir dans Cisco Packet Tracer :
 * [📥 Télécharger le lab (.pkt)](LAB-1.pkt)
+#### Identifiants & Sécurité
+Note : Par souci de simplicité pour ce laboratoire, j'ai utilisé un identifiant unique pour tous les équipements. Bien que la réutilisation d'un même mot de passe ne soit pas une bonne pratique en production, ce choix facilite ici l'exploration technique.
+* Utilisateur : admin
+* Mot de passe : cDawAG8!&E@F
 
 ### 📄 Fichiers de Configuration (Show Run)
 Pour une lecture rapide, les configurations sont disponibles ici :
