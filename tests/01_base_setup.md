@@ -35,9 +35,9 @@ Validation de l'accès depuis un poste d'administration et affichage de la banni
 * **Action :** Connexion depuis le terminal d'un PC (Packet Tracer).
 * **Commande :** `ssh -l admin 192.168.10.1`
 * **Points de contrôle :**
-    1. Affichage de la bannière **MOTD**.
-    2. Demande d'authentification (Compte local).
-    3. Accès réussi au prompt du switch.
+     Affichage de la bannière **MOTD**.
+     Demande d'authentification (Compte local).
+     Accès réussi au prompt du switch.
 
 > <img width="764" height="162" alt="image" src="https://github.com/user-attachments/assets/d7947a10-0d4c-4589-b733-7a44a6a26197" />
 
